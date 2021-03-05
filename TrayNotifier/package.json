@@ -1,0 +1,46 @@
+{
+  "name": "umphdashboardtraynotifier",
+  "productName": "Dashboard Notifier",
+  "version": "1.5.1",
+  "description": "Tray Notifier for Dashboard",
+  "main": "main.js",
+  "dependencies": {
+    "auto-launch": "^5.0.1",
+    "electron-store": "^1.2.0",
+    "request": "^2.81.0",
+    "windows-shortcuts": "^0.1.5"
+  },
+  "devDependencies": {
+    "archiver": "^2.0.3",
+    "commander": "^2.11.0",
+    "electron": "~1.6.2",
+    "electron-packager": "^8.7.2",
+    "electron-winstaller": "^2.6.3",
+    "eslint": "^4.5.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "scripts": {
+    "start-stage": "electron .",
+    "package-win-stg": "node resourcesCopier.js -s && electron-packager . --overwrite --ignore=\"(release-builds/)\" --asar=true --platform=win32 --arch=ia32 --name=\"Dashboard Notifier STG\" --icon='/images/green_icon.ico' --prune=true --out=\"release-builds\\stage\" --version-string.CompanyName=UMPH --version-string.FileDescription=UMPH --version-string.ProductName=\"Dashboard Notifier STG\" --win32metadata.ProductName=\"Dashboard Notifier STG\" --win32metadata.InternalName=umphdashboardtraynotifierstg ",
+    "package-win-prd": "node resourcesCopier.js -p && electron-packager . --overwrite --ignore=\"(release-builds/)\" --asar=true --platform=win32 --arch=ia32 --name=\"Dashboard Notifier PRD\" --icon='/images/green_inv_icon.ico' --prune=true --out=\"release-builds\\production\" --version-string.CompanyName=UMPH --version-string.FileDescription=UMPH --version-string.ProductName=\"UMPH Dashboard Notifier PRD\" --win32metadata.ProductName=\"Dashboard Notifier PRD\" --win32metadata.InternalName=umphdashboardtraynotifierprd ",
+    "rename-exe-stg": "node renameExe.js -s",
+    "rename-exe-prd": "node renameExe.js -p",
+    "create-installer-win-stg": "node installers/windows/createWindowsInstallerStage.js",
+    "create-installer-win-prd": "node installers/windows/createWindowsInstallerProduction.js",
+    "zip-stage": "node zipExes.js -s",
+    "zip-production": "node zipExes.js -p",
+    "zip-all": "node zipExes.js -a",
+    "package-and-create-installer-stage": "npm run package-win-stg && npm run rename-exe-stg && npm run create-installer-win-stg",
+    "package-and-create-installer-production": "npm run package-win-prd && npm run rename-exe-prd && npm run create-installer-win-prd",
+    "distribute-stage": "npm run package-and-create-installer-stage && npm run zip-stage",
+    "distribute-production": "npm run package-and-create-installer-production && npm run zip-production",
+    "distribute-all": "npm run package-and-create-installer-stage && npm run package-and-create-installer-production && npm run zip-all",
+    "lint": "eslint ."
+  },
+  "author": "Lee Jones",
+  "license": "MIT"
+}
