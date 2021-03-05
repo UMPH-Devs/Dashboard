@@ -1,0 +1,123 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+input {
+    color: #333;
+}
+
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+li {
+    list-style-type: none;
+}
+
+.white {
+    color: white;
+}
+
+.bullet {
+    list-style-type: circle;
+}
+
+.block {
+    min-width: 200px;
+    min-height: 200px;
+    border: 1px solid red;
+}
+
+.module-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 10%;
+    height: 100%;
+    width: 100%;
+    background-color: #444;
+    opacity: 80; 
+}
+
+.module {
+    width: 40%;
+    margin-left: 30%;
+}
+
+.md-header-button {
+    float: right;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.md li{
+    list-style-type: disc;
+}
+
+.panel-danger.inProgress .panel-heading {
+    background: repeating-linear-gradient(45deg, rgba(204, 0, 0, 1.0), rgba(204, 0, 0, 1.0) 10px, rgba(160, 0, 0, 1.0) 10px, rgba(160, 0, 0, 1.0) 20px);
+}
+
+.panel-warning.inProgress .panel-heading {
+background: repeating-linear-gradient(45deg, rgba(255, 255, 0, 1.0), rgba(255, 255, 0, 1.0) 10px, rgba(205, 205, 0, 1.0) 10px, rgba(205, 205, 0, 1.0) 20px);
+}
+
+.list-group-item-danger.inProgress {
+    background: repeating-linear-gradient(45deg, rgba(204, 0, 0, 0.3), rgba(204, 0, 0, 0.3) 10px, rgba(160, 0, 0, 0.3) 10px, rgba(160, 0, 0, 0.3) 20px);
+}
+
+.list-group-item-warning.inProgress {
+    background: repeating-linear-gradient(45deg, rgba(255, 255, 0, 0.3), rgba(255, 255, 0, 0.3) 10px, rgba(205, 205, 0, 0.3) 10px, rgba(205, 205, 0, 0.3) 20px);
+}
+
+
+
+.btn-LogOut {
+    background-color: hsl(0, 0%, 16%) !important;
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5b5b5b", endColorstr="#282828");
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#5b5b5b), to(#282828));
+    background-image: -moz-linear-gradient(top, #5b5b5b, #282828);
+    background-image: -ms-linear-gradient(top, #5b5b5b, #282828);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5b5b5b), color-stop(100%, #282828));
+    background-image: -webkit-linear-gradient(top, #5b5b5b, #282828);
+    background-image: -o-linear-gradient(top, #5b5b5b, #282828);
+    background-image: linear-gradient(#5b5b5b, #282828);
+    border-color: #282828 #282828 hsl(0, 0%, 11%);
+    color: #999999 !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
+    -webkit-font-smoothing: antialiased;
+    padding: 0px 15px 0px 15px;
+}
+.btn-LogOut:hover {
+    background-color: hsl(0, 0%, 16%) !important;
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#5b5b5b", endColorstr="#282828");
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#5b5b5b), to(#282828));
+    background-image: -moz-linear-gradient(top, #5b5b5b, #282828);
+    background-image: -ms-linear-gradient(top, #5b5b5b, #282828);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5b5b5b), color-stop(100%, #282828));
+    background-image: -webkit-linear-gradient(top, #5b5b5b, #282828);
+    background-image: -o-linear-gradient(top, #5b5b5b, #282828);
+    background-image: linear-gradient(#5b5b5b, #282828);
+    border-color: #282828 #282828 hsl(0, 0%, 11%);
+    color: #ffffff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
+    -webkit-font-smoothing: antialiased;
+
+}

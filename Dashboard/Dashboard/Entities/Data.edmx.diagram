@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="755cce79ec164bffabc0d242537b3b54" Name="Diagram1">
+        <EntityTypeShape EntityType="DmzDashboardModel.ModuleStatu" Width="1.875" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DmzDashboardModel.RefModuleType" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DmzDashboardModel.StatusItem" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="DmzDashboardModel.FK__StatusIte__Modul__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="DmzDashboardModel.FK__ModuleSta__RefMo__239E4DCF" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

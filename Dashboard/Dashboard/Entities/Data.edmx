@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DmzDashboardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ModuleStatus">
+          <Key>
+            <PropertyRef Name="ModuleStatusId" />
+          </Key>
+          <Property Name="ModuleStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomHtml" Type="varchar(max)" />
+          <Property Name="MinutesUntilWarning" Type="int" Nullable="false" />
+          <Property Name="MinutesUntilError" Type="int" Nullable="false" />
+          <Property Name="MachineName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="StatusLine" Type="varchar" MaxLength="255" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="RefModuleTypeId" Type="int" Nullable="false" />
+          <Property Name="LogText" Type="varchar(max)" />
+          <Property Name="IsLogHtml" Type="bit" Nullable="false" />
+          <Property Name="IsForcedSuccess" Type="bit" Nullable="false" />
+          <Property Name="IsInProgress" Type="bit" Nullable="false" />
+          <Property Name="InProgressUserid" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RefModuleType">
+          <Key>
+            <PropertyRef Name="RefModuleTypeId" />
+          </Key>
+          <Property Name="RefModuleTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppId" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="URL" Type="varchar" MaxLength="255" />
+          <Property Name="Frequency" Type="int" />
+          <Property Name="TokenRequired" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="StatusItem">
+          <Key>
+            <PropertyRef Name="StatusItemId" />
+          </Key>
+          <Property Name="StatusItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppId" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ItemStatus" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="ModuleStatusId" Type="int" />
+          <Property Name="Display" Type="bit" Nullable="false" />
+          <Property Name="InProgress" Type="bit" Nullable="false" />
+          <Property Name="InProgressUserid" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__ModuleSta__RefMo__239E4DCF">
+          <End Role="RefModuleType" Type="Self.RefModuleType" Multiplicity="1" />
+          <End Role="ModuleStatus" Type="Self.ModuleStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RefModuleType">
+              <PropertyRef Name="RefModuleTypeId" />
+            </Principal>
+            <Dependent Role="ModuleStatus">
+              <PropertyRef Name="RefModuleTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StatusIte__Modul__164452B1">
+          <End Role="ModuleStatus" Type="Self.ModuleStatus" Multiplicity="0..1" />
+          <End Role="StatusItem" Type="Self.StatusItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ModuleStatus">
+              <PropertyRef Name="ModuleStatusId" />
+            </Principal>
+            <Dependent Role="StatusItem">
+              <PropertyRef Name="ModuleStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DmzDashboardModelStoreContainer">
+          <EntitySet Name="ModuleStatus" EntityType="Self.ModuleStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RefModuleType" EntityType="Self.RefModuleType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusItem" EntityType="Self.StatusItem" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ModuleSta__RefMo__239E4DCF" Association="Self.FK__ModuleSta__RefMo__239E4DCF">
+            <End Role="RefModuleType" EntitySet="RefModuleType" />
+            <End Role="ModuleStatus" EntitySet="ModuleStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StatusIte__Modul__164452B1" Association="Self.FK__StatusIte__Modul__164452B1">
+            <End Role="ModuleStatus" EntitySet="ModuleStatus" />
+            <End Role="StatusItem" EntitySet="StatusItem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DmzDashboardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ModuleStatu">
+          <Key>
+            <PropertyRef Name="ModuleStatusId" />
+          </Key>
+          <Property Name="ModuleStatusId" Type="Int32" Nullable="false" />
+          <Property Name="CustomHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MinutesUntilWarning" Type="Int32" Nullable="false" />
+          <Property Name="MinutesUntilError" Type="Int32" Nullable="false" />
+          <Property Name="MachineName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="StatusItems" Relationship="Self.FK__StatusIte__Modul__164452B1" FromRole="ModuleStatus" ToRole="StatusItem" />
+          <Property Name="StatusLine" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RefModuleTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RefModuleType" Relationship="DmzDashboardModel.FK__ModuleSta__RefMo__239E4DCF" FromRole="ModuleStatu" ToRole="RefModuleType" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="LogText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsLogHtml" Type="Boolean" Nullable="false" />
+          <Property Name="IsForcedSuccess" Type="Boolean" Nullable="false" />
+          <Property Name="IsInProgress" Type="Boolean" Nullable="false" />
+          <Property Name="InProgressUserid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="RefModuleType">
+          <Key>
+            <PropertyRef Name="RefModuleTypeId" />
+          </Key>
+          <Property Name="RefModuleTypeId" Type="Int32" Nullable="false" />
+          <Property Name="AppId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Frequency" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ModuleStatus" Relationship="DmzDashboardModel.FK__ModuleSta__RefMo__239E4DCF" FromRole="RefModuleType" ToRole="ModuleStatu" />
+          <Property Name="TokenRequired" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusItem">
+          <Key>
+            <PropertyRef Name="StatusItemId" />
+          </Key>
+          <Property Name="StatusItemId" Type="Int32" Nullable="false" />
+          <Property Name="AppId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ItemStatus" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModuleStatusId" Type="Int32" />
+          <NavigationProperty Name="ModuleStatu" Relationship="Self.FK__StatusIte__Modul__164452B1" FromRole="StatusItem" ToRole="ModuleStatus" />
+          <Property Name="Display" Type="Boolean" Nullable="false" />
+          <Property Name="InProgress" Type="Boolean" Nullable="false" />
+          <Property Name="InProgressUserid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__StatusIte__Modul__164452B1">
+          <End Role="ModuleStatus" Type="Self.ModuleStatu" Multiplicity="0..1" />
+          <End Role="StatusItem" Type="Self.StatusItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ModuleStatus">
+              <PropertyRef Name="ModuleStatusId" />
+            </Principal>
+            <Dependent Role="StatusItem">
+              <PropertyRef Name="ModuleStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DashboardEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ModuleStatus" EntityType="Self.ModuleStatu" />
+          <EntitySet Name="RefModuleTypes" EntityType="Self.RefModuleType" />
+          <EntitySet Name="StatusItems" EntityType="Self.StatusItem" />
+          <AssociationSet Name="FK__StatusIte__Modul__164452B1" Association="Self.FK__StatusIte__Modul__164452B1">
+            <End Role="ModuleStatus" EntitySet="ModuleStatus" />
+            <End Role="StatusItem" EntitySet="StatusItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ModuleSta__RefMo__239E4DCF" Association="DmzDashboardModel.FK__ModuleSta__RefMo__239E4DCF">
+            <End Role="RefModuleType" EntitySet="RefModuleTypes" />
+            <End Role="ModuleStatu" EntitySet="ModuleStatus" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK__ModuleSta__RefMo__239E4DCF">
+          <End Type="DmzDashboardModel.RefModuleType" Role="RefModuleType" Multiplicity="1" />
+          <End Type="DmzDashboardModel.ModuleStatu" Role="ModuleStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RefModuleType">
+              <PropertyRef Name="RefModuleTypeId" />
+            </Principal>
+            <Dependent Role="ModuleStatu">
+              <PropertyRef Name="RefModuleTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DmzDashboardModelStoreContainer" CdmEntityContainer="DashboardEntities">
+          <EntitySetMapping Name="ModuleStatus">
+            <EntityTypeMapping TypeName="DmzDashboardModel.ModuleStatu">
+              <MappingFragment StoreEntitySet="ModuleStatus">
+                <ScalarProperty Name="InProgressUserid" ColumnName="InProgressUserid" />
+                <ScalarProperty Name="IsInProgress" ColumnName="IsInProgress" />
+                <ScalarProperty Name="IsForcedSuccess" ColumnName="IsForcedSuccess" />
+                <ScalarProperty Name="IsLogHtml" ColumnName="IsLogHtml" />
+                <ScalarProperty Name="LogText" ColumnName="LogText" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="RefModuleTypeId" ColumnName="RefModuleTypeId" />
+                <ScalarProperty Name="StatusLine" ColumnName="StatusLine" />
+                <ScalarProperty Name="ModuleStatusId" ColumnName="ModuleStatusId" />
+                <ScalarProperty Name="CustomHtml" ColumnName="CustomHtml" />
+                <ScalarProperty Name="MinutesUntilWarning" ColumnName="MinutesUntilWarning" />
+                <ScalarProperty Name="MinutesUntilError" ColumnName="MinutesUntilError" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RefModuleTypes">
+            <EntityTypeMapping TypeName="DmzDashboardModel.RefModuleType">
+              <MappingFragment StoreEntitySet="RefModuleType">
+                <ScalarProperty Name="TokenRequired" ColumnName="TokenRequired" />
+                <ScalarProperty Name="RefModuleTypeId" ColumnName="RefModuleTypeId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusItems">
+            <EntityTypeMapping TypeName="DmzDashboardModel.StatusItem">
+              <MappingFragment StoreEntitySet="StatusItem">
+                <ScalarProperty Name="InProgressUserid" ColumnName="InProgressUserid" />
+                <ScalarProperty Name="InProgress" ColumnName="InProgress" />
+                <ScalarProperty Name="Display" ColumnName="Display" />
+                <ScalarProperty Name="StatusItemId" ColumnName="StatusItemId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ItemStatus" ColumnName="ItemStatus" />
+                <ScalarProperty Name="ModuleStatusId" ColumnName="ModuleStatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
