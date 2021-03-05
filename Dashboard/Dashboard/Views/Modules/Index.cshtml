@@ -1,0 +1,40 @@
+﻿<div id="app">
+    <div class="panel panel-default">
+        
+        <div class="panel-heading"><h2>Modules</h2></div>
+        
+        <div class="panel-body">
+
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>App Id</th>
+                        <th>Token</th>
+                        <th>URL</th>
+                        <th>Update Frequency</th>
+                        <th>Create Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tr v-for="module in modules">
+                    <td v-text="module.Name"></td>
+                    <td v-text="module.AppId"></td>
+                    <td v-text="getTokenString(module.TokenRequired)"></td>
+                    <td v-text="module.URL || 'none'"></td>
+                    <td v-text="module.Frequency || 'none'"></td>
+                    <td v-text="getDate(module.CreateDate)"></td>
+                    <td><a class="btn btn-default" :href="getEditRoute(module.RefModuleTypeId)">Edit</a></td>
+                </tr>
+            </table>
+            <a href="/modules/create" class="btn btn-primary col-lg-1 col-lg-offset-11">Add Module</a>
+
+        </div>
+    </div>
+    
+</div>
+
+@section scripts
+{
+    <script src="~/js/moduleIndex.js"></script>
+}

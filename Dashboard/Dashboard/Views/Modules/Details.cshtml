@@ -1,0 +1,153 @@
+﻿<input type="hidden" value="@ViewBag.AppId" id="appId" />
+
+<style>
+    tr:hover {
+        background-color: #ddd;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    th, td {
+        padding: 20px;
+        background-color: none;
+    }
+</style>
+<div class="modal fade" id="videoModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="app">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <h3>
+                <span v-text="module.Name"></span><span v-if="$utils.moduleInProgress(module)">({{module.InProgressUserid}})</span>
+                <button class="btn btn-primary" v-show="!$utils.isGreen(module) && !$utils.moduleInProgress(module)" v-on:click="onModuleInProgress(module)">In Progress</button>
+                <button class="btn btn-primary" v-show="!$utils.isGreen(module) && $utils.moduleInProgress(module)" v-on:click="makeModalVisible">Force Green</button>
+            </h3>
+
+        </div>
+        <div class="panel-body container">
+
+            <!-- GENERAL STATUS -->
+            <!-- Log -->
+            <!-- Status History-->
+            <h2 class="text-center row">Status History</h2>
+            <v-row>
+                <ul class="list-group col-lg-offset-1 col-lg-10">
+                    <span v-for="(module, index) in history">
+                        <li class="list-group-item" :class="moduleStatus(module)">
+                            <a v-text="$utils.getPrettyDate(module.CreateDate)" data-toggle="collapse" :href="'#collapse-'+module.StatusId"></a>
+                            <div :class="['collapse', (index === 0 ? 'collapse in' : 'collapse')]" :id="'collapse-'+module.StatusId">
+                                <div v-if="module.StatusItems.length>0">
+                                    <h2 class="text-center row">Status</h2>
+                                    <v-row>
+                                        <ul class="list-group col-lg-offset-1 col-lg-10">
+                                            <li class="list-group-item" v-if="module.StatusLine">Status Line: <span v-text="module.StatusLine"></span></li>
+                                            <li class="list-group-item">Minutes Until Warning: <span v-text="module.MinutesUntilWarning"></span></li>
+                                            <li class="list-group-item">Minutes Until Error: <span v-text="module.MinutesUntilError"></span></li>
+                                            <li class="list-group-item">Updated: <span v-text="$utils.timeSince(module.CreateDate)"></span></li>
+                                            <li class="list-group-item list-group-item-success" v-if="$utils.isGreen(module)">Warning Time: <span v-text="$utils.getPrettyDate(untilWarning())"></span></li>
+                                            <li class="list-group-item" :class="getTimeClass(module)" v-else>Error Time: <span v-text="$utils.getPrettyDate(untilError())"></span></li>
+                                        </ul>
+                                    </v-row>
+                                    <!-- Status Items -->
+                                    <h2 class="text-center row" v-if="module.StatusItems">Status Items</h2>
+                                    <v-row>
+                                        <object>
+                                            <ul class="list-group col-lg-offset-1 col-lg-10" v-if="module.StatusItems">
+                                                <li v-for="item in module.StatusItems" class="list-group-item clearfix" :class="getItemStatus(item)">
+                                                    <span v-text="item.Name"></span>:
+                                                    <span v-html="item.Value"></span>
+                                                    @*<button class="pull-right btn btn-primary" v-if="!item.InProgress && ($utils.isItemRed(item) || $utils.isItemYellow(item))" v-on:click="clickInProgress(item)">In Progress</button>*@
+                                                </li>
+                                            </ul>
+                                        </object>
+                                    </v-row>
+                                </div>
+                                <h2 class="text-center row">Status Log</h2>
+                                <v-row>
+                                    <div class="panel panel-default col-lg-offset-1 col-lg-10" v-if="module.IsLogHtml">
+                                        <div class="panel-body" v-html="module.LogText"></div>
+                                    </div>
+
+                                    <div v-else>
+                                        <pre v-text="module.LogText" class="col-lg-offset-1 col-lg-10"></pre>
+                                    </div>
+                                </v-row>
+                            </div>
+                        </li>
+                    </span>
+                </ul>
+            </v-row>
+
+
+        </div>
+    </div>
+
+
+    <!-- FORCE GREEN MODAL -->
+    <div class="module-wrapper" v-show="isModalVisible">
+        <div class="panel panel-danger module">
+            <div class="panel-heading clearfix">
+                <button class="btn btn-default md-header-button" v-on:click="hideModal()">×</button>
+            </div>
+            <div class="panel-body" style="min-height: 200px;">
+                Are you sure that you want to force this module into a success state? This can not be undone, and should only be used when you have an issue you have fixed but can not have the process run for a length of time.
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-default" v-on:click="hideModal()">Cancel</button>
+                <button class="btn btn-danger" v-on:click="onForceGreen()">Send</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ADD USER MODAL-->
+    <div class="module-wrapper" v-show="isUserModalVisible">
+        <div class="panel panel-danger module">
+            <div class="panel-heading clearfix">
+                <button class="btn btn-default md-header-button" v-on:click="hideUserModal()">×</button>
+            </div>
+            <div class="panel-body" style="min-height: 200px;">
+                <div>Please enter your name.</div>
+                <input type="text" v-model="user" />
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-default" v-on:click="hideUserModal()">Cancel</button>
+                <button class="btn btn-danger" v-on:click="onSendUser()">Send</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script>
+        var OpenVideoModel = function (urlpath, title) {
+            if (title === undefined) { title = "";}
+            console.log(urlpath);
+            $("#videoModal .modal-title").empty();
+            $("#videoModal .modal-title").append(title);
+            $("#videoModal .modal-body p").empty();
+            $("#videoModal .modal-body p").append(`<video controls autoplay muted width='75%'><source  src="${urlpath}" type='video/mp4'></video>`);
+            $("#videoModal").modal();
+        };
+    </script>
+    <script src="~/js/moduleDetails.js"></script>
+}

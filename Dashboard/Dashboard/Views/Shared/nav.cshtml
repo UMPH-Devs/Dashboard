@@ -1,0 +1,36 @@
+﻿<div class="navbarWrapper">
+<nav class="navbar navbar-inverse bg-inverse navbar-fixed-top" style="margin-bottom: 30px;" id="nav">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand green" :class="env" href="/">Dashboard Home</a>
+        </div>
+        <!--
+        <button class="navbar-toggle navbar-toggler-right" data-toggle="collapse" data-target="#navbarNav" v-on:click="menuToggle()">
+            <span class="glyphicon glyphicon-chevron-down white" aria-hidden="true" v-if="!menuOpen"></span>
+            <span class="glyphicon glyphicon-chevron-up white" aria-hidden="true" v-else></span>
+        </button>
+    -->
+        <div style="float: left;" id="navbarNav">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/modules">Modules</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://umphwiki.YOURSERVER.COM/Dashboard-Wiki/topic/" target="help">Help</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Assets/TrayNotifier-Installer.zip">Download</a>
+                </li>
+
+            </ul>
+
+
+        </div>
+        <div class="pull-right" style="margin: 15px 15px 0px 15px;"><button class="btn-LogOut" v-on:click="onSignOut()">Sign Out {{userName}}</button></div>
+
+    </div>
+</nav>
+</div>

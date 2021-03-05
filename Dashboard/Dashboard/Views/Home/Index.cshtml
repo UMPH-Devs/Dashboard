@@ -1,0 +1,57 @@
+﻿<div id="app" class="divIndexWrapper">
+
+    <div v-sortable="{onUpdate: onUpdate}" class="row">
+
+        <div v-for="module in modules" class="col-lg-3 col-md-4 col-sm-4" v-show="inFilter(module)">
+            <div class="panel" :class="getModuleClass(module)">
+
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <span v-if="$utils.isRed(module)" class="glyphicon glyphicon-exclamation-sign"></span>
+                        <span v-if="$utils.isYellow(module)" class="glyphicon glyphicon-warning-sign"></span>
+                        <a :href="getLink(module.Id)" v-text="module.Name"></a>
+                        <span class="panelHeaderUser" v-if="module.IsInProgress" v-text="module.InProgressUserid"></span>
+                        <p class="glyphicon glyphicon-remove-sign" style="float:right;" v-on:click="makeInactive(module)"></p>
+                    </h4>   
+                </div>
+
+                <div class="panel-body">
+                    <h6 class="card-subtitle text-muted" v-text="module.StatusLine"></h6>
+                    <div v-if="hasDisplayItems(module)">
+                        <ul>
+                            <li v-for="item in module.StatusItems" v-if="item.Display">
+                                <span v-text="item.Name"></span>: <span v-text="item.Value"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div v-if="module.CustomHtml" v-html="module.CustomHtml"></div>
+                </div>
+                
+                <div class="panel-footer">
+                    <p class="glyphicon glyphicon-time" style="float:left; margin-right: 5px;" :title="$utils.getPrettyDate(module.CreateDate)"></p> Last updated {{$utils.timeSince(module.CreateDate)}}
+                    <a class="glyphicon glyphicon-question-sign" style="float:right;" :href="getwikilink(module)" target="help"></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @*FOOTER*@
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container">
+            <div class="dropup" v-show="inactiveModules.length > 0">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                <ul class="dropdown-menu list-group">
+                    <li v-for="module in inactiveModules" class="list-group-item" :class="listClass(module)" v-on:click="makeActive(module)">
+                        <span class="glyphicon glyphicon-plus"></span> <span v-text="module.Name"></span>
+                    </li>
+                </ul>
+            </div>
+            <span class="badge" v-text="inactiveWarningCount"></span>
+        </div>
+    </nav>
+</div>
+
+@section scripts {
+    <script src="~/js/index.js"></script>
+}

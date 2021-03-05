@@ -1,0 +1,44 @@
+﻿<input type="hidden" value="@ViewBag.Id" id="id" />
+
+<div id="app" style="margin-top:30px;" class="col-lg-4 col-lg-offset-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 v-text="module.Name"></h2>
+        </div>
+        <div class="panel-body">
+            
+            <v-row>
+                <h3 class="text-center">Info:</h3>
+            </v-row>
+            <ul class="list-group">
+                <li class="list-group-item">Status Line: <span v-text="module.StatusLine"></span></li>
+                <li class="list-group-item">Upload Time: <span v-text="prettyDate(module.CreateDate)"></span></li>
+            </ul>
+            
+            <div v-if="module.StatusItems">
+                <v-row>
+                    <h3 class="text-center">Status Items:</h3>
+                </v-row>
+
+                <ul class="list-group">
+                    <li v-for="item in module.StatusItems" class="list-group-item" :class="statusClass(item)">
+                        <span v-text="item.Name"></span>: <span v-text="item.Value"></span>
+                    </li>
+                </ul>
+            </div>
+            <v-row>
+                <h3 class="text-center">Log:</h3>
+                <div class="panel panel-default">
+                    <div v-html="module.LogText" v-if="module.IsLogHtml" class="panel-body"></div>
+                    <pre  v-else="module.IsLogHtml" class="panel-body" v-text="module.LogText"></pre>
+                </div>
+            </v-row>
+        </div>
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/js/moduleStatus.js"></script>
+}

@@ -1,0 +1,62 @@
+﻿<div id="app">
+    <div class="panel panel-default">
+
+        <div class="panel-heading"><h2 class="text-center">Create Module</h2></div>
+
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group" :class="{ 'has-error': appIdError }">
+                    <label for="formAppId" class="col-lg-2 control-label">App Id</label>
+                    <div class="col-lg-10">
+                        <input type="text" id="formAppId" class="form-control" placeholder="App Id" v-model="module.appId" />
+                    </div>
+                    <div class="help-block col-lg-10 col-lg-offset-2 text-danger" v-show="appIdError">App Id is required</div>
+                </div>
+
+                <div class="form-group" :class="{'has-error': nameError}">
+                    <label class="col-lg-2 control-label">Name</label>
+                    <div class="col-lg-10"><input type="text" class="form-control" placeholder="Name" v-model="module.name" /></div>
+                    <div class="help-block col-lg-10 col-lg-offset-2 text-danger" v-show="nameError">Name Id is required</div>
+                </div>
+
+                <div class="form-group" :class="{'has-error': tokenError}">
+                    <label class="col-lg-2 control-label">Requires Token</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" v-on:change="onSelectChanged()">
+                            <option value=true selected>Yes</option>
+                            <option value=false>No</option>
+                        </select>
+                    </div>
+                    <div class="help-block col-lg-10 col-lg-offset-2 text-danger" v-show="tokenError">Name Id is required</div>
+                </div>
+
+                <div class="form-group" :class="{'has-error': urlFrequencyError}">
+                    <label class="col-lg-2 control-label">URL</label>
+                    <div class="col-lg-10"><input type="text" class="form-control" placeholder="URL" v-model="module.url" /></div>
+                    <div class="help-block col-lg-10 col-lg-offset-2 text-danger" v-show="urlFrequencyError">Url and Frequency must both be present or empty.</div>
+                </div>
+
+                <div class="form-group" :class="{'has-error': urlFrequencyError}">
+                    <label class="col-lg-2 control-label">Frequency</label>
+                    <div class="col-lg-10"><input type="text" placeholder="Frequency" class="form-control" v-model="module.frequency" /></div>
+                    <div class="help-block col-lg-10 col-lg-offset-2 text-danger" v-show="urlFrequencyError">Url and Frequency must both be present or empty.</div>
+                </div>
+
+                <div class="form-group" :class="{'has-error': urlFrequencyError}">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button class="btn btn-primary" v-on:click="onSubmit(this)">Submit</button>
+                        <a href="/modules" class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+@section scripts
+{
+    <script src="~/js/moduleCreate.js"></script>
+}
+
