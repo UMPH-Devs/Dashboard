@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using FluentValidation;
+using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.Remoting;
-using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-using System.Runtime.Remoting.Channels;
-using FluentValidation;
 
 namespace ModuleStatusInterface
 {
@@ -36,11 +29,6 @@ namespace ModuleStatusInterface
 
         }
 
-        [Obsolete("Use capitalized one, please!")]
-        public static Target getTargetFromString(string str = null) {
-            return GetTargetFromString(str);
-        }
-
         /// <summary>
         /// Takes "dev" "stg" or "prd" and returns an enum
         /// </summary>
@@ -50,17 +38,13 @@ namespace ModuleStatusInterface
         {
             var t = ConfigurationManager.AppSettings["DashboardTargetString"];
             str = t ?? str;
-            switch (str.ToLower())
+            return str.ToLower() switch
             {
-                case "dev":
-                    return Target.Dev;
-                case "stg":
-                    return Target.Stg;
-                case "prd":
-                    return Target.Prd;
-                default:
-                    throw new ArgumentException();
-            }
+                "dev" => Target.Dev,
+                "stg" => Target.Stg,
+                "prd" => Target.Prd,
+                _ => throw new ArgumentException(),
+            };
         }
 
         #region helpers
@@ -90,8 +74,10 @@ namespace ModuleStatusInterface
         {
             ValidateModuleAndStatus(status);
             var targetString = GetUrlFromTarget(target);
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(targetString);
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri(targetString)
+            };
             return client;
         }
 
