@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Batch Scripts\RecordStatus.bat" />
+    <None Remove="Batch Scripts\RemoveStatuses.bat" />
+    <None Remove="Batch Scripts\RunUpdate.bat" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Batch Scripts\RecordStatus.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Batch Scripts\RemoveStatuses.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Batch Scripts\RunUpdate.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="System.Diagnostics.EventLog" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ModuleStatusInterface">
+      <HintPath>Include\ModuleStatusInterface.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
